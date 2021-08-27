@@ -11,7 +11,9 @@
         android:theme="@style/Theme.Bubble">
         <activity
             android:name=".TargetActivity"
-            android:exported="true" />
+            android:allowEmbedded="true"
+            android:label="@string/title_activity_bubble"
+            android:resizeableActivity="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

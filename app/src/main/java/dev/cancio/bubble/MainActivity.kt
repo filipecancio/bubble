@@ -5,11 +5,14 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Icon
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.graphics.drawable.IconCompat
 import dev.cancio.bubble.databinding.ActivityMainBinding
 
 private lateinit var binding: ActivityMainBinding
@@ -56,6 +59,16 @@ class MainActivity : AppCompatActivity() {
         .setContentIntent(getTargetIntent())
         .setAutoCancel(true)
 
+    private fun newBubbleNotification(title:String, subtitle:String,bubbleData:  NotificationCompat.BubbleMetadata) = NotificationCompat
+        .Builder(this,CHANNEL_ID)
+        .setSmallIcon(R.drawable.ic_launcher_background)
+        .setContentTitle(title)
+        .setContentText(subtitle)
+        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        .setContentIntent(getTargetIntent())
+        .setBubbleMetadata(bubbleData)
+        .setAutoCancel(true)
+
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -74,4 +87,17 @@ class MainActivity : AppCompatActivity() {
     private fun notify(notificationId:Int,builder: NotificationCompat.Builder) = with(NotificationManagerCompat.from(this)){
         notify(notificationId, builder.build())
     }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun getBubble(notificationId:Int, builder: NotificationCompat.Builder) = NotificationCompat
+        .BubbleMetadata
+        .Builder(
+            getTargetIntent(),
+            IconCompat.createWithResource(this, R.drawable.ic_launcher_background)
+        )
+        .setAutoExpandBubble(true)
+        .setSuppressNotification(true)
+        .setDesiredHeight(600)
+        .build()
+
 }
