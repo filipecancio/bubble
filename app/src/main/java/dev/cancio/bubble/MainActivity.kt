@@ -3,6 +3,7 @@ package dev.cancio.bubble
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,6 +15,11 @@ private lateinit var binding: ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private val CHANNEL_ID = "BUBBLE"
+
+    companion object{
+        fun getStartIntent(context: Context) =
+            Intent(context, MainActivity::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
