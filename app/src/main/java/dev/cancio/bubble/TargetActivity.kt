@@ -1,5 +1,7 @@
 package dev.cancio.bubble
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -20,9 +22,16 @@ class TargetActivity : AppCompatActivity() {
 
         with(binding){
             btnTargetBack.setOnClickListener {
-                this@TargetActivity.startActivity(
-                    MainActivity.getStartIntent(this@TargetActivity)
+                val context = this@TargetActivity
+                context.startActivity(
+                    MainActivity.getStartIntent(context)
                 )
+            }
+            btnTargetCode.setOnClickListener {
+                var clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                val code = txtTargetCode.text
+                val clip = ClipData.newPlainText("RANDOM UUID",code)
+                clipboard.setPrimaryClip(clip)
             }
         }
 
