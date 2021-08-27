@@ -2,6 +2,7 @@ package dev.cancio.bubble
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -39,12 +40,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun newNotification(title:String, subtitle:String) = NotificationCompat
+    private fun getTargetIntent(): PendingIntent{
+        val intent = Intent(this, TargetActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        return PendingIntent.getActivity(this, 0, intent, 0)
+    }
+
+    private fun newNotification(title:String, subtitle:String) = NotificationCompat
         .Builder(this,CHANNEL_ID)
         .setSmallIcon(R.drawable.ic_launcher_background)
         .setContentTitle(title)
         .setContentText(subtitle)
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        .setContentIntent(getTargetIntent())
+        .setAutoCancel(true)
 
 
     private fun createNotificationChannel() {

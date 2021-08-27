@@ -20,7 +20,9 @@ class TargetActivity : AppCompatActivity() {
 
         with(binding){
             btnTargetBack.setOnClickListener {
-                MainActivity.getStartIntent(it.context)
+                this@TargetActivity.startActivity(
+                    MainActivity.getStartIntent(this@TargetActivity)
+                )
             }
         }
 
